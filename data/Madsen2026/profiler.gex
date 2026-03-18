@@ -1,0 +1,175 @@
+sTEM_stb2xyz.exe version: 1.1.1
+GEX-file for sTEM import to Aarhus Workbench, based on: O:\Nat-Tech_HGG-Projects\2025_SallingKirkeby\sTEM_data\SallingKirkeby_sTEM_0035_Profiler\2025_0327\2025_0327_081212\2025_0327_081212.stb
+
+[General]
+Datatype=    sTEMp
+
+GPSPosition1=      0.00   0.00  -0.20
+RxCoilPosition1= -13.00   0.00  -0.00
+TxCoilPosition1=   0.00   0.00  -0.00
+
+LoopType= 73
+NumberOfTurnsLM= 2
+NumberOfTurnsHM= 2
+
+TxLoopArea=   9.00
+TxLoopPoint1=    1.50      1.50
+TxLoopPoint2=   -1.50      1.50
+TxLoopPoint3=   -1.50     -1.50
+TxLoopPoint4=    1.50     -1.50
+
+WaveformLMPoint01= -6.74000e-04   -0.000
+WaveformLMPoint02= -6.60942e-04   -0.204
+WaveformLMPoint03= -6.44006e-04   -0.397
+WaveformLMPoint04= -6.24508e-04   -0.569
+WaveformLMPoint05= -6.01419e-04   -0.717
+WaveformLMPoint06= -5.78842e-04   -0.810
+WaveformLMPoint07= -5.48569e-04   -0.885
+WaveformLMPoint08= -5.19836e-04   -0.945
+WaveformLMPoint09= -4.84432e-04   -0.981
+WaveformLMPoint10= -4.75709e-04   -1.000
+WaveformLMPoint11= -4.74000e-04   -1.000
+WaveformLMPoint12= -4.73828e-04   -0.967
+WaveformLMPoint13= -4.73683e-04   -0.867
+WaveformLMPoint14= -4.73502e-04   -0.663
+WaveformLMPoint15= -4.73321e-04   -0.454
+WaveformLMPoint16= -4.73161e-04   -0.292
+WaveformLMPoint17= -4.73016e-04   -0.182
+WaveformLMPoint18= -4.72763e-04   -0.063
+WaveformLMPoint19= -4.72422e-04   -0.005
+WaveformLMPoint20= -4.70000e-04   -0.000
+WaveformLMPoint21= -2.00000e-04    0.000
+WaveformLMPoint22= -1.86942e-04    0.204
+WaveformLMPoint23= -1.70006e-04    0.397
+WaveformLMPoint24= -1.50508e-04    0.569
+WaveformLMPoint25= -1.27419e-04    0.717
+WaveformLMPoint26= -1.04842e-04    0.810
+WaveformLMPoint27= -7.45693e-05    0.885
+WaveformLMPoint28= -4.58357e-05    0.945
+WaveformLMPoint29= -1.04318e-05    0.981
+WaveformLMPoint30= -1.70907e-06    1.000
+WaveformLMPoint31=  0.00000e+00    1.000
+WaveformLMPoint32=  1.71745e-07    0.967
+WaveformLMPoint33=  3.16711e-07    0.867
+WaveformLMPoint34=  4.97919e-07    0.663
+WaveformLMPoint35=  6.79127e-07    0.454
+WaveformLMPoint36=  8.38591e-07    0.292
+WaveformLMPoint37=  9.83557e-07    0.182
+WaveformLMPoint38=  1.23725e-06    0.063
+WaveformLMPoint39=  1.57792e-06    0.005
+WaveformLMPoint40=  4.00000e-06    0.000
+
+WaveformHMPoint01= -6.20000e-03   -0.000
+WaveformHMPoint02= -6.17761e-03   -0.260
+WaveformHMPoint03= -6.15748e-03   -0.438
+WaveformHMPoint04= -6.12526e-03   -0.636
+WaveformHMPoint05= -6.07290e-03   -0.816
+WaveformHMPoint06= -6.00846e-03   -0.919
+WaveformHMPoint07= -5.94000e-03   -0.965
+WaveformHMPoint08= -5.84737e-03   -0.987
+WaveformHMPoint09= -5.65405e-03   -0.999
+WaveformHMPoint10= -5.15868e-03   -1.000
+WaveformHMPoint11= -4.75191e-03   -1.000
+WaveformHMPoint12= -4.61095e-03   -1.000
+WaveformHMPoint13= -4.60000e-03   -1.000
+WaveformHMPoint14= -4.59988e-03   -0.989
+WaveformHMPoint15= -4.59971e-03   -0.942
+WaveformHMPoint16= -4.59947e-03   -0.816
+WaveformHMPoint17= -4.59921e-03   -0.648
+WaveformHMPoint18= -4.59894e-03   -0.451
+WaveformHMPoint19= -4.59868e-03   -0.271
+WaveformHMPoint20= -4.59848e-03   -0.173
+WaveformHMPoint21= -4.59828e-03   -0.105
+WaveformHMPoint22= -4.59789e-03   -0.041
+WaveformHMPoint23= -4.59688e-03   -0.015
+WaveformHMPoint24= -4.59500e-03   -0.000
+WaveformHMPoint25= -1.60000e-03    0.000
+WaveformHMPoint26= -1.57761e-03    0.260
+WaveformHMPoint27= -1.55748e-03    0.438
+WaveformHMPoint28= -1.52526e-03    0.636
+WaveformHMPoint29= -1.47290e-03    0.816
+WaveformHMPoint30= -1.40846e-03    0.919
+WaveformHMPoint31= -1.34000e-03    0.965
+WaveformHMPoint32= -1.24737e-03    0.987
+WaveformHMPoint33= -1.05405e-03    0.999
+WaveformHMPoint34= -5.58679e-04    1.000
+WaveformHMPoint35= -1.51910e-04    1.000
+WaveformHMPoint36= -1.09510e-05    1.000
+WaveformHMPoint37=  0.00000e+00    1.000
+WaveformHMPoint38=  1.21007e-07    0.989
+WaveformHMPoint39=  2.87718e-07    0.942
+WaveformHMPoint40=  5.34161e-07    0.816
+WaveformHMPoint41=  7.87852e-07    0.648
+WaveformHMPoint42=  1.06329e-06    0.451
+WaveformHMPoint43=  1.32423e-06    0.271
+WaveformHMPoint44=  1.51993e-06    0.173
+WaveformHMPoint45=  1.71564e-06    0.105
+WaveformHMPoint46=  2.11430e-06    0.041
+WaveformHMPoint47=  3.12181e-06    0.015
+WaveformHMPoint48=  5.00000e-06    0.000
+
+/LM-GateTimes    Center(s)        Open(s)      Close(s)
+GateTimeLM01= 1.097112e-05   9.614493e-06  1.251918e-05
+GateTimeLM02= 1.337395e-05   1.172020e-05  1.526105e-05
+GateTimeLM03= 1.630303e-05   1.428708e-05  1.860343e-05
+GateTimeLM04= 1.987361e-05   1.741615e-05  2.267783e-05
+GateTimeLM05= 2.422620e-05   2.123052e-05  2.764458e-05
+GateTimeLM06= 2.953207e-05   2.588030e-05  3.369913e-05
+
+/HM-GateTimes    Center(s)        Open(s)      Close(s)
+GateTimeHM01= 2.246928e-05   1.938180e-05  2.604860e-05
+GateTimeHM02= 2.804826e-05   2.419418e-05  3.251630e-05
+GateTimeHM03= 3.501247e-05   3.020144e-05  4.058988e-05
+GateTimeHM04= 4.370584e-05   3.770026e-05  5.066809e-05
+GateTimeHM05= 5.455772e-05   4.706099e-05  6.324866e-05
+GateTimeHM06= 6.810405e-05   5.874593e-05  7.895289e-05
+GateTimeHM07= 8.501385e-05   7.333218e-05  9.855639e-05
+GateTimeHM08= 1.061222e-04   9.154009e-05  1.230273e-04
+GateTimeHM09= 1.324717e-04   1.142689e-04  1.535742e-04
+GateTimeHM10= 1.653636e-04   1.426411e-04  1.917057e-04
+GateTimeHM11= 2.064223e-04   1.780580e-04  2.393050e-04
+GateTimeHM12= 2.576756e-04   2.222687e-04  2.987229e-04
+GateTimeHM13= 3.216549e-04   2.774565e-04  3.728938e-04
+GateTimeHM14= 4.015197e-04   3.463472e-04  4.654810e-04
+GateTimeHM15= 5.012144e-04   4.323430e-04  5.810569e-04
+GateTimeHM16= 6.256628e-04   5.396910e-04  7.253296e-04
+GateTimeHM17= 7.810109e-04   6.736929e-04  9.054243e-04
+GateTimeHM18= 9.749308e-04   8.409665e-04  1.130235e-03
+GateTimeHM19= 1.217000e-03   1.049773e-03  1.410866e-03
+GateTimeHM20= 1.519173e-03   1.310425e-03  1.761174e-03
+GateTimeHM21= 1.896374e-03   1.635795e-03  2.198463e-03
+GateTimeHM22= 2.367231e-03   2.041952e-03  2.744327e-03
+
+RxCoilLPFilter1= 1.00    4.500e+05
+
+[Channel1]
+TransmitterMoment=           LM
+RxCoilNumber=                1
+GateTimeShift=               -3.000e-07
+GateFactor=                  0.95
+RemoveInitialGates=          0
+PrimaryFieldDampingFactor=   1
+UniformDataSTD=              0.00
+NoGates=                     6
+RepFreq=                     2109.70
+FrontGateTime=               0
+TiBLowPassFilter=            1.00   8.000e+05
+TxApproximateCurrent=        1.0
+SystemResponseConvolution=   0
+ReceiverPolarizationXYZ=     Z
+
+[Channel2]
+TransmitterMoment=           HM
+RxCoilNumber=                1
+GateTimeShift=               -3.000e-07
+GateFactor=                  1.02
+RemoveInitialGates=          0
+PrimaryFieldDampingFactor=   1
+UniformDataSTD=              0.00
+NoGates=                     22
+RepFreq=                     217.39
+FrontGateTime=               0
+TiBLowPassFilter=            1.00   8.000e+05
+TxApproximateCurrent=        10.0
+SystemResponseConvolution=   0
+ReceiverPolarizationXYZ=     Z
