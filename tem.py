@@ -1,5 +1,6 @@
 # %%
 import utm
+from pathlib import Path
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -11,11 +12,16 @@ def rhoa(t, dbzdt, m=1.0):
     mu0 = 4e-7*np.pi
     return mu0 / np.pi * (mu0 * m / 20.0)**(2/3) * np.abs(dbzdt)**(-2/3) * t**(-5/3)
 
+# dr = dr/du * du = -2/3 r / u *du => |dr/r| = 2/3 |dr/r|
+
 # %%
 class TEM:
     """Class for processing TEM data."""
     def __init__(self, filename:str=None, cfg=None, **kwargs):
         self.thk = kwargs.pop("thk", np.arange(2, 28, 2))
+        if cfg is None and filename.endswith(".xyz"):
+            if Path(filename[:-4]+".gex").exists():
+                cfg = filename[:-4]+".gex"
         if cfg is not None:
             if isinstance(cfg, str):
                 self.readCFG(cfg)
@@ -58,7 +64,6 @@ class TEM:
         nH = len(self.cfg["timeH"])
         CH2 = np.column_stack([self.data[f"dbdt{i:03d}_Ch2"] for i in range(1, nH+1)])
         SD2 = np.column_stack([self.data[f"stdF{i:03d}_Ch2"] for i in range(1, nH+1)])
-        print(CH1.shape, CH2.shape)
         self.DATA = np.hstack([CH1, CH2])
         self.SD = np.hstack([SD1, SD2])
         self.calcRhoa()
@@ -79,16 +84,42 @@ class TEM:
                    vmin=np.log10(rmin), vmax=np.log10(rmax),
                    **kwargs)
 
-    def showSounding(self, n=0, **kwargs):
+    def showSounding(self, n=0, rhoa=False, ax=None, **kwargs):
         """Show single sounding."""
         kwargs.setdefault("marker", "+")
         kwargs.setdefault("ls", ":")
-        fig, ax = plt.subplots()
-        err = self.SD[n]*np.abs(self.DATA[n])
-        ax.errorbar(self.t, self.DATA[n], yerr=err, **kwargs)
+        if ax is None:
+            fig, ax = plt.subplots()
+
+        data = self.DATA[n]
+        err = self.SD[n]*np.abs(data)
+        if rhoa:
+            data = self.RHOA[n]
+            err = 2/3 * self.SD[n]*np.abs(data)
+
+        n0 = 0
+        alln = np.hstack([np.nonzero(np.diff(self.t)<0)[0]+1, len(self.t)])
+        kwargs.setdefault("color", None)
+        for nn in alln:
+            er = ax.errorbar(self.t[n0:nn], data[n0:nn], yerr=err[n0:nn], **kwargs)
+            if kwargs["color"] is None:
+                kwargs["color"] = er.lines[0].get_color()
+            n0 = nn
+
         ax.set_xscale('log')
         ax.set_yscale('log')
-        ax.grid()
+        ax.grid(True)
+        return ax
+
+    def showSoundings(self, nn=None, **kwargs):
+        """Show several soundings in one figure."""
+        if nn is None:
+            nn = range(self.DATA.shape[0])
+        ax = None
+        for i in nn:
+            ax = self.showSounding(i, ax=ax, **kwargs)
+
+        return ax
 
     def showPositions(self):
         """Show sounding positions."""
@@ -100,7 +131,8 @@ class TEM:
             ax.text(x[i], y[i], str(i), va="center", ha="center")
 
         ax.set_aspect(1.0)
-        ax.grid()
+        ax.grid(True)
+        return ax
 
     def filter(self, tmin=0, tmax=1e9, nmin=0, nmax=9999, n=None):
         """Filter data."""
@@ -128,14 +160,27 @@ class TEM:
         self.res1d = inv.run(data, err, verbose=1, startModel=self.f.createStartVector(data))
         self.inv1d = inv
         if show:
-            fig, ax = plt.subplots(ncols=2)
-            pg.viewer.mpl.drawModel1D(ax[0], self.thk, self.res1d, plot="semilogx")
-            ax[0].invert_yaxis()
-            ax[1].errorbar(self.t, data, yerr=err*data, marker="+", ls=":", label="data")
-            ax[1].loglog(self.t, inv.response, '-', label="model response B")
-            ax[1].legend()
-            # ax[1].set_ylim(1e-14, 1e-7)
-            ax[1].grid()
+            self.show1dResult()
+
+    def show1dResult(self):
+        """Show 1D model and data fit."""
+        inv = self.inv1d
+        data = inv.dataVals
+        fig, ax = plt.subplots(ncols=2)
+        pg.viewer.mpl.drawModel1D(ax[0], self.thk, self.res1d, plot="semilogx")
+        ax[0].invert_yaxis()
+        ax[1].errorbar(self.t, data, yerr=inv.errorVals*data, marker="+", ls="None", label="data")
+        ax[1].set_xscale('log')
+        ax[1].set_yscale('log')
+        n0 = 0
+        alln = np.hstack([np.nonzero(np.diff(self.t)<0)[0]+1, len(self.t)])
+        color = None
+        for nn in alln:
+            li = ax[1].plot(self.t[n0:nn], inv.response[n0:nn], color=color)[0]
+            color = li.get_color() if color is None else None
+            n0 = nn
+
+        ax[1].grid()
 
     def invertAll(self, show=True):
         """Invert all data individually."""
