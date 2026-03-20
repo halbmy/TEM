@@ -7,12 +7,8 @@ import matplotlib.pyplot as plt
 from stem import readSettings, sTEMRhoModelling
 # from stem import sTEMBlockModelling
 import pygimli as pg
+from tools import rhoa, skinDepthTEM
 
-def rhoa(t, dbzdt, m=1.0):
-    mu0 = 4e-7*np.pi
-    return mu0 / np.pi * (mu0 * m / 20.0)**(2/3) * np.abs(dbzdt)**(-2/3) * t**(-5/3)
-
-# dr = dr/du * du = -2/3 r / u *du => |dr/r| = 2/3 |dr/r|
 
 # %%
 class TEM:
@@ -38,14 +34,23 @@ class TEM:
     def readCFG(self, cfg):
         """Read data file (xyz)."""
         self.cfg = readSettings(cfg)
+        self.createForwardOperator()
+
+    def createForwardOperator(self, thk=None):
+        """Create a forward operator from the given cfg."""
+        if thk is not None:
+            self.thk = thk
+
         self.f = sTEMRhoModelling(thk=self.thk, cfg=self.cfg)
         self.t = self.f.t
 
-    def showWaveform(self):
+    def showWaveform(self, label="", ax=None):
         """Show current waveform."""
-        fig, ax = plt.subplots()
-        ax.plot(self.cfg["tL"], self.cfg["vL"], label="LM")
-        ax.plot(self.cfg["tH"], self.cfg["vH"], label="HM")
+        if ax is None:
+            fig, ax = plt.subplots()
+
+        ax.plot(self.cfg["tL"], self.cfg["vL"], label=label+" LM")
+        ax.plot(self.cfg["tH"], self.cfg["vH"], label=label+" HM")
         ax.set_xlabel("t [s]")
         ax.legend()
         ax.grid()
@@ -117,7 +122,7 @@ class TEM:
             nn = range(self.DATA.shape[0])
         ax = None
         for i in nn:
-            ax = self.showSounding(i, ax=ax, **kwargs)
+            ax = self.showSounding(i, ax=ax, label=str(i), **kwargs)
 
         return ax
 
@@ -149,15 +154,34 @@ class TEM:
         if doex:
             self.extractData()
 
-    def invertSounding(self, n=0, show=True):
+        if tmin > 0 or tmax < 100:
+            it = np.nonzero(np.bitwise_and(self.t <= 5e-4, self.t > 0))[0]
+            self.DATA = self.DATA[:, it]
+            self.SD = self.SD[:, it]
+            self.RHOA = self.RHOA[:, it]
+            for tt in ["timeL", "timeH"]:
+                t = self.cfg[tt]
+                self.cfg[tt] = t[np.nonzero(np.bitwise_and(t <= 5e-4, t > 0))[0]]
+
+            self.createForwardOperator()
+            # self.calcRhoa()
+            # self.t = self.t[it]  # wrong
+
+    def invertSounding(self, n=0, minerr=0.015, thk=None, show=True, **kwargs):
         """Invert data."""
+        if thk is not None:
+            self.createForwardOperator(thk=thk)
+
         inv = pg.Inversion(fop=self.f)
         # inv.dataTrans = "log" # not really necessary
         data = np.abs(self.DATA[n])
-        err = np.maximum(self.SD[n], 0.015)
-        err[self.DATA[n] <1e-15] = 1e8
+        err = np.maximum(self.SD[n], minerr)
+        err[self.DATA[n] < 1e-15] = 1e8
         err[err > 1] = 1e8
-        self.res1d = inv.run(data, err, verbose=1, startModel=self.f.createStartVector(data))
+        err[~np.isfinite(data)] = 1e8
+        data[~np.isfinite(data)] = 1e-10
+        kwargs.setdefault("startModel", self.f.createStartVector(data))
+        self.res1d = inv.run(data, err, verbose=1, **kwargs)
         self.inv1d = inv
         if show:
             self.show1dResult()

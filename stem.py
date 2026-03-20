@@ -145,7 +145,12 @@ class sTEMRhoModelling(pg.frameworks.MeshModelling):
         super().__init__(mesh=self.mesh_)
         if isinstance(cfg, str):
             cfg = readSettings(cfg)
-
+        # t = cfg["tL"]
+        # v = cfg["vL"]
+        # self.signalL = {"nodes": t[t >= -t[-1]*100], "amplitudes": v[t >= -t[-1]*100]}
+        # t = cfg["tH"]
+        # v = cfg["vH"]
+        # self.signalH = {"nodes": t[t >= -t[-1]*100], "amplitudes": v[t >= -t[-1]*100]}
         self.signalL = {'nodes': cfg["tL"], 'amplitudes': cfg["vL"], 'signal': 1}
         self.signalH = {'nodes': cfg["tH"], 'amplitudes': cfg["vH"], 'signal': 1}
         self.timeL = cfg["timeL"]
