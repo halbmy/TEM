@@ -7,6 +7,8 @@ def readGEXFile(fname="sTEM.gex"):
     """Read GEX file (a rather general function)."""
     with open(fname) as fid:
         lines = fid.readlines()
+        for i, line in enumerate(lines):
+            lines[i] = line.replace("=", "= ")
 
     out = {}
     putin = out
@@ -50,7 +52,7 @@ def readSettings(filename="sTEM.gex"):
     cfg = {}
     cfg["rxpos"] = out["RxCoilPosition1"]
     cfg["txpos"] = out["TxCoilPosition1"]
-    cfg["txarea"] = out["TxLoopArea"]
+    cfg["txarea"] = out.pop("TxLoopArea", 0)
     txp = collectNumData(out, "TxLoopPoint")
     cfg["tx"], cfg["ty"] = txp[:, 0], txp[:, 1]
     bla = collectNumData(out, "WaveformLMPoint", num=2)

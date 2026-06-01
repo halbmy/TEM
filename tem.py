@@ -15,7 +15,7 @@ class TEM:
     """Class for processing TEM data."""
     def __init__(self, filename:str=None, cfg=None, **kwargs):
         self.thk = kwargs.pop("thk", np.arange(2, 28, 2))
-        if cfg is None and filename.endswith(".xyz"):
+        if cfg is None and filename.lower().endswith(".xyz"):
             if Path(filename[:-4]+".gex").exists():
                 cfg = filename[:-4]+".gex"
         if cfg is not None:
